@@ -26,3 +26,12 @@ function showFunFact() {
   const funFactContainer = document.getElementById('fact-container');
   funFactContainer.innerText = fact;
 }
+
+/**
+ * Displays a fun fact about Eshika.
+ */
+async function fetchMessage() {
+  const response = await fetch('/data');
+  const message = await response.text();
+  document.getElementById('message-container').innerText = message;
+}
