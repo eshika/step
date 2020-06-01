@@ -25,12 +25,7 @@ function advanceSlides(n) {
 function showSlides(n) {
     var slides = document.getElementsByClassName("slide");
     var captionText = document.getElementById("caption");
-    if (n > slides.length - 1) {
-        currSlideNum = 0;
-    }
-    if (n < 0) {
-        currSlideNum = slides.length - 1;
-    }
+    currSlideNum %= slides.length;
     for (var i = 0; i < slides.length; i++) {
         slides[i].style.display = "none";
     }
