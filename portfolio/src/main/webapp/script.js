@@ -26,4 +26,3 @@ function showFunFact() {
   const funFactContainer = document.getElementById('fact-container');
   funFactContainer.innerText = fact;
 }
-
