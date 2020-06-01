@@ -25,7 +25,6 @@ function advanceSlides(n) {
 function showSlides(n) {
     var slides = document.getElementsByClassName("slide");
     var captionText = document.getElementById("caption");
-    var captions = ["Key Lime Pie", "Mango Cheesecake", "Pear Galette", "Strawb Shortcake"];
     if (n > slides.length - 1) {
         currSlideNum = 0;
     }
@@ -36,5 +35,5 @@ function showSlides(n) {
         slides[i].style.display = "none";
     }
     slides[currSlideNum].style.display = "block";
-    captionText.innerHTML = captions[n];
+    captionText.innerHTML = slides[currSlideNum].getElementsByTagName("img")[0].alt;
 }
