@@ -101,9 +101,6 @@ footer a {
 .prev, .next {
   cursor: pointer;
   top: 43%;
-  /* width: auto;
-  margin-top: -22px;
-  margin-bottom: -22px; */
   padding: 8px;
   color: black;
   font-weight: bold;
