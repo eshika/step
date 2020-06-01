@@ -35,8 +35,6 @@ function showSlides(n) {
     for (var i = 0; i < slides.length; i++) {
         slides[i].style.display = "none";
     }
-    console.log(slides);
-    console.log(currSlideNum);
     slides[currSlideNum].style.display = "block";
     captionText.innerHTML = captions[n];
 }
