@@ -36,8 +36,14 @@ function advanceSlides(n) {
 function showSlides() {
     let slides = document.getElementsByClassName("slide");
     let captionText = document.getElementById("caption");
-    currSlideNum += slides.length;
-    currSlideNum %= slides.length;
+    // Negative mods are negative in JS, so handle edge case 
+    // by setting currSlideNum to the last slide
+    if (currSlideNum < 0) {
+      currSlideNum = slides.length - 1;
+    } 
+    else {
+      currSlideNum %= slides.length;
+    }
     for (let i = 0; i < slides.length; i++) {
         slides[i].style.display = "none";
     }
