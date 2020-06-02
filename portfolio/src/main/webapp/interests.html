@@ -3,17 +3,53 @@
   <head>
     <meta charset="UTF-8">
     <title>Eshika's Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="style.css">
-    <script src="script.js"></script>
+    <script src="interests_script.js"></script>
   </head>
-  <body>
+  <body onload="initSlides()">
     <div class="topnav">
-        <a class="active" href="index.html">Home</a>
-        <a href="interests.html">Interests</a>      
+      <a href="index.html">Home</a>
+      <a class="active" href="interests.html">Interests</a>      
     </div>
     <div id="content">
       <h1>Eshika's Portfolio</h1>
-      <img src="\images\eshika.jpg" width="100" height="100">
+
+      <p>I really enjoy baking. Here is a slideshow of some of my latest creations!</p>
+
+      <div class="container">
+          <div class="slide">
+            <img src="\images\key_lime_pie.jpg" alt="Key Lime Pie" width="300" height="300">
+          </div>
+
+          <div class="slide">
+            <img src="\images\mango_cheesecake.jpg" alt="Mango Cheesecake" width="300" height="300">
+          </div>
+
+          <div class="slide">
+            <img src="\images\pear_galette.jpg" alt="Pear Galette" width="300" height="300">
+          </div>
+
+          <div class="slide">
+            <img src="\images\strawb_shortcake.jpg" alt="Strawberry Shortcake" width="300" height="300">
+          </div>
+
+        <div class="caption-container">
+          <p id="caption"></p>
+        </div>
+
+        <div class="button-container">
+          <button class="prev" onclick="advanceSlides(-1)">&#10094;</button>
+          <button class="next" onclick="advanceSlides(1)">&#10095;</button>
+        </div>
+
+      </div>
     </div>
   </body>
+
+  <footer>
+    <a class="fa fa-linkedin-square" href="https://linkedin.com/in/eshikasaxena"></a>
+    <a class="fa fa-github" href="https://github.com/eshika"></a>
+    <a class="fa fa-envelope" href="mailto:eshikasaxena@college.harvard.edu"></a>
+  </footer>
 </html>
