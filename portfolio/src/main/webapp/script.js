@@ -28,7 +28,7 @@ function showFunFact() {
 }
 
 /**
- * Displays a fun fact about Eshika.
+ * Fetches and displays thank you message.
  */
 async function fetchMessage() {
   const response = await fetch('/data');
