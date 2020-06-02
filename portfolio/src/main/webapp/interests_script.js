@@ -14,19 +14,31 @@
 
 let currSlideNum = 0;
 
+/**
+ * Initializes slideshow by showing the first slide.
+ */
 function initSlides() {
     showSlides(currSlideNum);
 }
 
+/**
+ * Advances slideshow by n slides.
+ * @param {number} n The number of slides to advance.
+ */
 function advanceSlides(n) {
-    showSlides(currSlideNum += n);
+  currSlideNum += n;
+  showSlides();
 }
 
-function showSlides(n) {
-    var slides = document.getElementsByClassName("slide");
-    var captionText = document.getElementById("caption");
+/**
+ * Shows the slide at currSlideNum and hides all others.
+ */
+function showSlides() {
+    let slides = document.getElementsByClassName("slide");
+    let captionText = document.getElementById("caption");
+    currSlideNum += slides.length;
     currSlideNum %= slides.length;
-    for (var i = 0; i < slides.length; i++) {
+    for (let i = 0; i < slides.length; i++) {
         slides[i].style.display = "none";
     }
     slides[currSlideNum].style.display = "block";
