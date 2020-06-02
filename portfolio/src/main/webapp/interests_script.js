@@ -31,7 +31,7 @@ function advanceSlides(n) {
 }
 
 /**
- * Shows the slide at currSlideNum and hides all others.
+ * Shows the current slide and hides all others.
  */
 function showSlides() {
     let slides = document.getElementsByClassName("slide");
@@ -40,8 +40,7 @@ function showSlides() {
     // by setting currSlideNum to the last slide
     if (currSlideNum < 0) {
       currSlideNum = slides.length - 1;
-    } 
-    else {
+    } else {
       currSlideNum %= slides.length;
     }
     for (let i = 0; i < slides.length; i++) {
