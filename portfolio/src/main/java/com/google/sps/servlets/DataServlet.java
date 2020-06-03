@@ -52,7 +52,7 @@ public class DataServlet extends HttpServlet {
 
   /**
    * Queries comments in descending order of timestamp (most recent first), 
-   * converts to an ArrayList of comments, and sends JSON string of comments as a repsonse.
+   * converts to an ArrayList of comments, and sends JSON string of comments as a response.
    */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
