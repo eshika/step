@@ -27,31 +27,46 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
-  private ArrayList<String> messages;
+  private ArrayList<String> comments = new ArrayList<String>();
 
+  /**
+   * Gets input from the form, adds it to data structure, and redirects back to the HTML page.
+   */
   @Override
-  public void init() {
-    messages = new ArrayList<>();
-    messages.add("Message 1");
-    messages.add("Message 2");
-    messages.add("Message 3");
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    String text = getParameter(request, "text-input", "");
+    comments.add(text);
+    response.sendRedirect("/index.html");
   }
 
+  /**
+   * Converts a ArrayList of comments into a JSON string and sends JSON string as a repsonse.
+   */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String json = convertToJsonUsingGson(messages);
-
-    // Send the JSON as the response
+    String json = convertToJsonUsingGson(comments);
     response.setContentType("application/json;");
     response.getWriter().println(json);
   }
 
   /**
-   * Converts a ArrayList of messages into a JSON string using the Gson library.
+   * Converts a ArrayList of comments into a JSON string using the Gson library.
    */
-  private String convertToJsonUsingGson(ArrayList messages) {
+  private String convertToJsonUsingGson(ArrayList comments) {
     Gson gson = new Gson();
-    String json = gson.toJson(messages);
+    String json = gson.toJson(comments);
     return json;
   }
+
+  /**
+   * @return the request parameter, or the default value if the parameter
+   *         was not specified by the client
+   */
+  private String getParameter(HttpServletRequest request, String name, String defaultValue) {
+    String value = request.getParameter(name);
+    if (value == null) {
+      return defaultValue;
+    }
+    return value;
+  }  
 }
