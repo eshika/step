@@ -40,7 +40,7 @@ public class DataServlet extends HttpServlet {
   }
 
   /**
-   * Converts a ArrayList of comments into a JSON string and sends JSON string as a repsonse.
+   * Converts a ArrayList of comments into a JSON string and sends JSON string as a response.
    */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
