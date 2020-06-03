@@ -29,6 +29,9 @@ public class DataServlet extends HttpServlet {
 
   private ArrayList<String> messages;
 
+  /**
+   * Initializes ArrayList of messages with hard-coded messages.
+   */
   @Override
   public void init() {
     messages = new ArrayList<>();
@@ -37,11 +40,12 @@ public class DataServlet extends HttpServlet {
     messages.add("Message 3");
   }
 
+  /**
+   * Converts a ArrayList of comments into a JSON string and sends JSON string as a repsonse.
+   */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String json = convertToJsonUsingGson(messages);
-
-    // Send the JSON as the response
     response.setContentType("application/json;");
     response.getWriter().println(json);
   }
