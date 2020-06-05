@@ -26,7 +26,15 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
-  private ArrayList<String> comments = new ArrayList<String>();
+  private List<String> comments;
+
+  /**
+   * Initializes ArrayList<String> of comments.
+   */
+  @Override
+  public void init() {
+    comments = new ArrayList<String>();
+  }
 
   /**
    * Gets input from the form, adds it to data structure, and redirects back to the HTML page.
