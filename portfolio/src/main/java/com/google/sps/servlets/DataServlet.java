@@ -17,6 +17,7 @@ package com.google.sps.servlets;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -26,10 +27,10 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
-  private ArrayList<String> messages;
+  private List<String> messages;
 
   /**
-   * Initializes ArrayList of messages with hard-coded messages.
+   * Initializes ArrayList<String> of messages with hard-coded messages.
    */
   @Override
   public void init() {
@@ -40,7 +41,7 @@ public class DataServlet extends HttpServlet {
   }
 
   /**
-   * Converts a ArrayList of comments into a JSON string and sends JSON string as a response.
+   * Converts a ArrayList<String> of comments into a JSON string and sends JSON string as a response.
    */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -50,9 +51,9 @@ public class DataServlet extends HttpServlet {
   }
 
   /**
-   * Converts a ArrayList of messages into a JSON string using the Gson library.
+   * Converts a ArrayList<String> of messages into a JSON string using the Gson library.
    */
-  private String convertToJsonUsingGson(ArrayList messages) {
+  private String convertToJsonUsingGson(List<String> messages) {
     Gson gson = new Gson();
     String json = gson.toJson(messages);
     return json;
