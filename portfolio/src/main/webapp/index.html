@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
   </head>
-  <body>
+  <body onload="fetchMessage()">
     <div class="topnav">
       <a class="active" href="index.html">Home</a>
       <a href="interests.html">Interests</a>      
@@ -22,6 +22,7 @@
       <p>Click here to see a fun fact about me:</p>
       <button onclick="showFunFact()">Fun Fact</button>
       <div id="fact-container"></div>
+      <p id="message-container"></p>
     </div>
   </body>
 
