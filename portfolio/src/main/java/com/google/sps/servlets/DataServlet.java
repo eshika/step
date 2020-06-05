@@ -35,7 +35,7 @@ public class DataServlet extends HttpServlet {
 
   private DatastoreService datastore;
   private String commentEntityLabel;
-  private String commentPropertyLabel;
+  private String textPropertyLabel;
   private String timestampPropertyLabel;
 
   /**
