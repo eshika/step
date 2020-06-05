@@ -28,12 +28,12 @@ function showFunFact() {
 }
 
 /**
- * Fetches and displays thank you message.
+ * Fetches and displays comments.
  */
-async function fetchMessage() {
-  const response = await fetch('/data');
+async function fetchMessage(commentLimit) {
+  const response = await fetch('/data?max-comments=' + commentLimit);
   const message = await response.json();
-  console.log(message);
+  console.log(commentLimit);
   const messageContainer = document.getElementById('message-container')
   messageContainer.innerText = '';
   for (let i = 0; i < message.length; i++) {
@@ -42,6 +42,13 @@ async function fetchMessage() {
 
 }
 
+/**
+ * Refreshes comments.
+ */
+async function refreshMessage() {
+  let commentLimit = document.getElementById("limit").value;
+  fetchMessage(commentLimit);
+}
 
 /** Creates an <li> element containing text. */
 function createListElement(text) {
