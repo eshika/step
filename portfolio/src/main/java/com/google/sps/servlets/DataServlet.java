@@ -87,7 +87,7 @@ public class DataServlet extends HttpServlet {
   /**
    * Converts a ArrayList of comments into a JSON string using the Gson library.
    */
-  private String convertToJsonUsingGson(ArrayList comments) {
+  private String convertToJsonUsingGson(List comments) {
     Gson gson = new Gson();
     String json = gson.toJson(comments);
     return json;
