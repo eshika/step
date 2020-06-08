@@ -22,7 +22,13 @@
       <p>Click here to see a fun fact about me:</p>
       <button onclick="showFunFact()">Fun Fact</button>
       <div id="fact-container"></div>
-      <p id="message-container"></p>
+      <form action="/data" method="POST">
+        <p>Leave a comment here:</p>
+        <textarea name="text-input"></textarea>
+        </br><br/>
+        <input type="submit" />
+      </form>
+      <div id="message-container"></div>
     </div>
   </body>
 
