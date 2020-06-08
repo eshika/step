@@ -33,8 +33,19 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
-  private DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-  int commentLimit;
+  public static final String COMMENT_ENTITY_LABEL = "Comment";
+  public static final String TEXT_PROPERTY_LABEL = "comment";
+  public static final String TIMESTAMP_PROPERTY_LABEL = "timestamp";
+
+  private DatastoreService datastore;
+
+  /**
+   * Initializes datastore for comments.
+   */
+  @Override
+  public void init() {
+    datastore = DatastoreServiceFactory.getDatastoreService();  
+  }
 
   /**
    * Gets input from the form, adds it to datastore, and redirects back to the HTML page.
@@ -44,9 +55,9 @@ public class DataServlet extends HttpServlet {
     String text = getParameter(request, "text-input", "");
     long timestamp = System.currentTimeMillis();
 
-    Entity commentEntity = new Entity("Comment");
-    commentEntity.setProperty("comment", text);
-    commentEntity.setProperty("timestamp", timestamp);
+    Entity commentEntity = new Entity(COMMENT_ENTITY_LABEL);
+    commentEntity.setProperty(TEXT_PROPERTY_LABEL, text);
+    commentEntity.setProperty(TIMESTAMP_PROPERTY_LABEL, timestamp);
     datastore.put(commentEntity);
 
     commentLimit = getCommentLimit(request);
@@ -60,14 +71,14 @@ public class DataServlet extends HttpServlet {
    */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
+    Query query = new Query(COMMENT_ENTITY_LABEL).addSort(TIMESTAMP_PROPERTY_LABEL, SortDirection.DESCENDING);
     PreparedQuery results = datastore.prepare(query);
 
-    ArrayList<String> comments = new ArrayList<String>();
+    List<String> comments = new ArrayList<>();
     commentLimit = getCommentLimit(request);
 
     for (Entity entity : results.asIterable()) {
-      String comment = (String) entity.getProperty("comment");
+      String comment = (String) entity.getProperty(TEXT_PROPERTY_LABEL);
       comments.add(comment);
     }
 
@@ -77,9 +88,9 @@ public class DataServlet extends HttpServlet {
   }
 
   /**
-   * Converts a ArrayList of comments into a JSON string using the Gson library.
+   * Converts a ArrayList<String> of messages into a JSON string using the Gson library.
    */
-  private String convertToJsonUsingGson(List comments) {
+  private String convertToJsonUsingGson(List<String> messages) {
     Gson gson = new Gson();
     String json = gson.toJson(comments);
     return json;

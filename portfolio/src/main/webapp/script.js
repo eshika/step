@@ -35,7 +35,6 @@ let commentLimit = 1;
 async function fetchMessage(commentLimit) {
   const response = await fetch('/data?max-comments=' + commentLimit);
   const message = await response.json();
-  console.log(commentLimit);
   const messageContainer = document.getElementById('message-container')
   messageContainer.innerText = '';
   for (let i = 0; i < message.length; i++) {
