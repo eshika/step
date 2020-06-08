@@ -33,7 +33,6 @@ function showFunFact() {
 async function fetchMessage() {
   const response = await fetch('/data');
   const message = await response.json();
-  console.log(message);
   const messageContainer = document.getElementById('message-container')
   messageContainer.innerText = '';
   for (let i = 0; i < message.length; i++) {
@@ -41,7 +40,6 @@ async function fetchMessage() {
   }
 
 }
-
 
 /** Creates an <li> element containing text. */
 function createListElement(text) {

@@ -48,7 +48,7 @@ public class DataServlet extends HttpServlet {
   }
 
   /**
-   * Converts a ArrayList of comments into a JSON string and sends JSON string as a response.
+   * Converts a ArrayList<String> of comments into a JSON string and sends JSON string as a response.
    */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -58,9 +58,9 @@ public class DataServlet extends HttpServlet {
   }
 
   /**
-   * Converts a ArrayList of comments into a JSON string using the Gson library.
+   * Converts a ArrayList<String> of messages into a JSON string using the Gson library.
    */
-  private String convertToJsonUsingGson(List comments) {
+  private String convertToJsonUsingGson(List<String> messages) {
     Gson gson = new Gson();
     String json = gson.toJson(comments);
     return json;
