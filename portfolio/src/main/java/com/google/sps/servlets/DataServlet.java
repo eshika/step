@@ -33,10 +33,11 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
+  public static final String COMMENT_ENTITY_LABEL = "Comment";
+  public static final String TEXT_PROPERTY_LABEL = "comment";
+  public static final String TIMESTAMP_PROPERTY_LABEL = "timestamp";
+
   private DatastoreService datastore;
-  private String commentEntityLabel;
-  private String textPropertyLabel;
-  private String timestampPropertyLabel;
 
   /**
    * Initializes datastore for comments.
@@ -44,9 +45,6 @@ public class DataServlet extends HttpServlet {
   @Override
   public void init() {
     datastore = DatastoreServiceFactory.getDatastoreService();  
-    commentEntityLabel = "Comment";
-    textPropertyLabel = "comment";
-    timestampPropertyLabel = "timestamp";
   }
 
   /**
@@ -57,9 +55,9 @@ public class DataServlet extends HttpServlet {
     String text = getParameter(request, "text-input", "");
     long timestamp = System.currentTimeMillis();
 
-    Entity commentEntity = new Entity(commentEntityLabel);
-    commentEntity.setProperty(textPropertyLabel, text);
-    commentEntity.setProperty(timestampPropertyLabel, timestamp);
+    Entity commentEntity = new Entity(COMMENT_ENTITY_LABEL);
+    commentEntity.setProperty(TEXT_PROPERTY_LABEL, text);
+    commentEntity.setProperty(TIMESTAMP_PROPERTY_LABEL, timestamp);
     datastore.put(commentEntity);
 
     response.sendRedirect("/index.html");
@@ -71,12 +69,12 @@ public class DataServlet extends HttpServlet {
    */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    Query query = new Query(commentEntityLabel).addSort(timestampPropertyLabel, SortDirection.DESCENDING);
+    Query query = new Query(COMMENT_ENTITY_LABEL).addSort(TIMESTAMP_PROPERTY_LABEL, SortDirection.DESCENDING);
     PreparedQuery results = datastore.prepare(query);
 
     List<String> comments = new ArrayList<>();
     for (Entity entity : results.asIterable()) {
-      String comment = (String) entity.getProperty(textPropertyLabel);
+      String comment = (String) entity.getProperty(TEXT_PROPERTY_LABEL);
       comments.add(comment);
     }
     String json = convertToJsonUsingGson(comments);
