@@ -27,6 +27,8 @@ function showFunFact() {
   funFactContainer.innerText = fact;
 }
 
+let commentLimit = 1;
+
 /**
  * Fetches and displays comments.
  */
@@ -46,7 +48,7 @@ async function fetchMessage(commentLimit) {
  * Refreshes comments.
  */
 async function refreshMessage() {
-  let commentLimit = document.getElementById("limit").value;
+  commentLimit = document.getElementById("limit").value;
   fetchMessage(commentLimit);
 }
 

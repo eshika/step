@@ -51,7 +51,7 @@ public class DataServlet extends HttpServlet {
 
     commentLimit = getCommentLimit(request);
 
-    response.sendRedirect("index.html");
+    response.sendRedirect("/");
   }
 
   /**
