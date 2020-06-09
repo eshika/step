@@ -38,6 +38,7 @@ public class DataServlet extends HttpServlet {
   public static final String TIMESTAMP_PROPERTY_LABEL = "timestamp";
 
   private DatastoreService datastore;
+  private int commentLimit;
 
   /**
    * Initializes datastore for comments.
@@ -59,8 +60,6 @@ public class DataServlet extends HttpServlet {
     commentEntity.setProperty(TEXT_PROPERTY_LABEL, text);
     commentEntity.setProperty(TIMESTAMP_PROPERTY_LABEL, timestamp);
     datastore.put(commentEntity);
-
-    commentLimit = getCommentLimit(request);
 
     response.sendRedirect("/");
   }
@@ -90,7 +89,7 @@ public class DataServlet extends HttpServlet {
   /**
    * Converts a ArrayList<String> of messages into a JSON string using the Gson library.
    */
-  private String convertToJsonUsingGson(List<String> messages) {
+  private String convertToJsonUsingGson(List<String> comments) {
     Gson gson = new Gson();
     String json = gson.toJson(comments);
     return json;

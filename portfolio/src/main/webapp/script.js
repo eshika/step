@@ -35,6 +35,7 @@ let commentLimit = 1;
 async function fetchMessage(commentLimit) {
   const response = await fetch('/data?max-comments=' + commentLimit);
   const message = await response.json();
+  console.log(message);
   const messageContainer = document.getElementById('message-container')
   messageContainer.innerText = '';
   for (let i = 0; i < message.length; i++) {
@@ -51,9 +52,55 @@ async function refreshMessage() {
   fetchMessage(commentLimit);
 }
 
-/** Creates an <li> element containing text. */
+/**
+ * Creates an <li> element containing text.
+ */
 function createListElement(text) {
   const liElement = document.createElement('li');
   liElement.innerText = text;
   return liElement;
+}
+
+/**
+ * Saves the comment limit as a cookie.
+ */
+function setCookie() {
+  let d = new Date();
+  // Cookie expires after 365 days
+  d.setTime(d.getTime() + (365 * 24 * 60 * 60 * 1000));
+  let expires = "expires="+d.toUTCString();
+  let cvalue = document.getElementById("limit").value;
+  document.cookie = "limit=" + cvalue + ";" + expires + ";path=/";
+}
+
+/**
+ * Obtains the cookie value.
+ */
+function getCookie(cookieLabel) {
+  let name = cookieLabel + "=";
+  let ca = document.cookie.split(';');
+  for (let i = 0; i < ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+
+/**
+ * Fetches comments based on the value stored in the cookie.
+ */
+function checkCookie() {
+  let limitCookie = getCookie("limit");
+  if (limitCookie != "") {
+    document.getElementById("limit").value = limitCookie;
+    fetchMessage(limitCookie);
+  } else {
+    document.getElementById("limit").value = 1;
+    fetchMessage(1);
+  }
 }
