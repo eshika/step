@@ -6,7 +6,7 @@
 //
 //     https://www.apache.org/licenses/LICENSE-2.0
 //
-// Unless required by applicable law or agreed to in writing, software
+// Unless required by applicookiesble law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
@@ -27,29 +27,18 @@ function showFunFact() {
   funFactContainer.innerText = fact;
 }
 
-let commentLimit = 1;
-
 /**
  * Fetches and displays comments.
  */
 async function fetchMessage(commentLimit) {
   const response = await fetch('/data?max-comments=' + commentLimit);
   const message = await response.json();
-  console.log(message);
   const messageContainer = document.getElementById('message-container')
   messageContainer.innerText = '';
   for (let i = 0; i < message.length; i++) {
     messageContainer.appendChild(createListElement(message[i]));
   }
 
-}
-
-/**
- * Refreshes comments.
- */
-async function refreshMessage() {
-  commentLimit = document.getElementById("limit").value;
-  fetchMessage(commentLimit);
 }
 
 /**
@@ -68,39 +57,40 @@ function setCookie() {
   let d = new Date();
   // Cookie expires after 365 days
   d.setTime(d.getTime() + (365 * 24 * 60 * 60 * 1000));
-  let expires = "expires="+d.toUTCString();
-  let cvalue = document.getElementById("limit").value;
-  document.cookie = "limit=" + cvalue + ";" + expires + ";path=/";
+  let expires = 'expires='+d.toUTCString();
+  let cvalue = document.getElementById('limit').value;
+  document.cookie = 'limit=' + cvalue + ';' + expires + ';path=/';
 }
 
 /**
  * Obtains the cookie value.
  */
 function getCookie(cookieLabel) {
-  let name = cookieLabel + "=";
-  let ca = document.cookie.split(';');
-  for (let i = 0; i < ca.length; i++) {
-    let c = ca[i];
-    while (c.charAt(0) == ' ') {
-      c = c.substring(1);
+  let name = cookieLabel + '=';
+  let cookies = document.cookie.split(';');
+  for (let i = 0; i < cookies.length; i++) {
+    let current = cookies[i];
+    while (current.charAt(0) == ' ') {
+      current = current.substring(1);
     }
-    if (c.indexOf(name) == 0) {
-      return c.substring(name.length, c.length);
+    if (current.indexOf(name) == 0) {
+      return current.substring(name.length, current.length);
     }
   }
-  return "";
+  return '';
 }
 
 /**
  * Fetches comments based on the value stored in the cookie.
  */
 function checkCookie() {
-  let limitCookie = getCookie("limit");
-  if (limitCookie != "") {
-    document.getElementById("limit").value = limitCookie;
-    fetchMessage(limitCookie);
+  let commentLimit = getCookie('limit');
+  if (commentLimit != '') {
+    document.getElementById('limit').value = commentLimit;
+    fetchMessage(commentLimit);
   } else {
-    document.getElementById("limit").value = 1;
+    // Default value for max comments is 1
+    document.getElementById('limit').value = 1;
     fetchMessage(1);
   }
 }

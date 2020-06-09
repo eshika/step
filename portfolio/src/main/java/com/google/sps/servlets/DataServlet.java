@@ -107,7 +107,6 @@ public class DataServlet extends HttpServlet {
     return value;
   }  
 
-
   /** Returns the max number of comments to fetch and display, or -1 if the choice was invalid. */
   private int getCommentLimit(HttpServletRequest request) {
     // Get the input from the form.
