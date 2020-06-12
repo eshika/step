@@ -12,9 +12,109 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/** Creates a map and adds it to the page. */
+var map;
+var guess;
+var answer;
+
+/** Initializes the regular map for users to guess
+  * and the map marker that represents the user's guess. 
+  */
 function initMap() {
-  const map = new google.maps.Map(
-      document.getElementById('map'),
-      {center: {lat: 37.422, lng: -122.084}, zoom: 16});
+  map = new google.maps.Map(
+      document.getElementById('guessMap'),
+      {center: {lat: 0.0, lng: 0.0}, 
+      zoom: 1,
+      streetViewControl: false,
+  });
+
+  guess = new google.maps.Marker({
+    position: {lat: 0.0, lng: 0.0}, 
+    map: map,
+    draggable:true
+  });
+
+  guess.setVisible(false);
+
+  guess.addListener('dragend', function(e) {
+    calcScore(e.latLng, answer);
+  });
+  
+  const listener = map.addListener('click', function(e) {
+    let pinLoc = e.latLng;
+    guess.setPosition(pinLoc);
+    if (guess.getVisible()) {
+      map.panTo(guess.getPosition());
+    }
+    else {
+      guess.setVisible(true);
+      map.panTo(guess.getPosition());
+    }
+    calcScore(pinLoc, answer);
+  });
+}
+
+/**
+ * Randomly generates coordinates and attempts to create
+ * street view map with those coordinates.
+ */
+function randomPano(callback) {
+  const lat = (Math.random()*90)-90;
+  const lng = (Math.random()*180)-180;
+  const svs = new google.maps.StreetViewService();
+  const randomLoc = new google.maps.LatLng(lat, lng);
+  svs.getPanorama({
+    location: randomLoc,
+    radius: 50,
+  }, callback);
+}
+
+/**
+ * Generates street view map with valid coordinates. 
+ */
+function handleCallback(data, status) {
+  if (status == 'OK') {
+    answer = data.location.latLng;
+    let panorama = new google.maps.StreetViewPanorama(
+        document.getElementById('streetMap'), {
+          position: answer,
+          addressControl: false,
+          linksControl: true,
+          panControl: true,
+          enableCloseButton: false,
+          showRoadLabels: false
+    });
+  } else {
+    randomPano(handleCallback);
+  }
+}
+
+let finalScore = 0.0;
+
+/**
+ * Calculates distance between two coords in miles. 
+ */
+function calcScore(loc1, loc2) {
+  let R = 3958.8; // Radius of the Earth in miles
+  let rlat1 = loc1.lat() * (Math.PI/180); // Convert degrees to radians
+  let rlat2 = loc2.lat() * (Math.PI/180); // Convert degrees to radians
+  let difflat = rlat2-rlat1; // Radian difference (latitudes)
+  let difflon = (loc2.lng()-loc1.lng()) * (Math.PI/180); // Radian difference (longitudes)
+  finalScore = 2 * R * Math.asin(Math.sqrt(Math.sin(difflat/2)*Math.sin(difflat/2)+Math.cos(rlat1)*Math.cos(rlat2)*Math.sin(difflon/2)*Math.sin(difflon/2)));
+}
+
+/**
+ * Shows user distance between guess and answer 
+ * and shows the original location on the map. 
+ */
+function submit() {
+  alert("Distance: " + finalScore.toFixed(2) + " miles");
+  let ansMarker = new google.maps.Marker({
+    position: answer, 
+    map: map,
+    icon: {
+      url: "http://maps.google.com/mapfiles/ms/icons/green-dot.png"
+    }
+  });
+  map.panTo(answer);
+  let line = new google.maps.Polyline({path: [ansMarker.getPosition(), guess.getPosition()], map: map});
 }
