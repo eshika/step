@@ -44,8 +44,7 @@ function initMap() {
     guess.setPosition(pinLoc);
     if (guess.getVisible()) {
       map.panTo(guess.getPosition());
-    }
-    else {
+    } else {
       guess.setVisible(true);
       map.panTo(guess.getPosition());
     }
@@ -92,6 +91,7 @@ let finalScore = 0.0;
 
 /**
  * Calculates distance between two lat lng coordinates in miles. 
+ * Code from: https://cloud.google.com/blog/products/maps-platform/how-calculate-distances-map-maps-javascript-api
  */
 function calcScore(loc1, loc2) {
   const R = 3958.8; // Radius of the Earth in miles
@@ -99,7 +99,8 @@ function calcScore(loc1, loc2) {
   const rlat2 = loc2.lat() * (Math.PI/180); // Convert degrees to radians
   const difflat = rlat2-rlat1; // Radian difference (latitudes)
   const difflon = (loc2.lng()-loc1.lng()) * (Math.PI/180); // Radian difference (longitudes)
-  finalScore = 2 * R * Math.asin(Math.sqrt(Math.sin(difflat/2)*Math.sin(difflat/2)+Math.cos(rlat1)*Math.cos(rlat2)*Math.sin(difflon/2)*Math.sin(difflon/2)));
+  finalScore = 2 * R * Math.asin(Math.sqrt(Math.sin(difflat/2)*Math.sin(difflat/2)+
+                                Math.cos(rlat1)*Math.cos(rlat2)*Math.sin(difflon/2)*Math.sin(difflon/2)));
 }
 
 /**
