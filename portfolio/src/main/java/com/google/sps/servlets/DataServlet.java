@@ -80,8 +80,12 @@ public class DataServlet extends HttpServlet {
       String comment = (String) entity.getProperty(TEXT_PROPERTY_LABEL);
       comments.add(comment);
     }
-
-    String json = convertToJsonUsingGson(comments.subList(0, commentLimit));
+    String json;
+    if (commentLimit > comments.size()) {
+      json = convertToJsonUsingGson(comments);
+    } else {
+      json = convertToJsonUsingGson(comments.subList(0, commentLimit));
+    }
     response.setContentType("application/json;");
     response.getWriter().println(json);
   }
