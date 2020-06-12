@@ -113,13 +113,11 @@ public class DataServlet extends HttpServlet {
     String userInputString = request.getParameter("max-comments");
 
     // Convert the input to an int.
-    int userInput;
     try {
-      userInput = Integer.parseInt(userInputString);
+      return Integer.parseInt(userInputString);
     } catch (NumberFormatException e) {
       System.err.println("Could not convert to int: " + userInputString);
-      return -1;
+      return 1;
     }
-    return userInput;
   }
 }
