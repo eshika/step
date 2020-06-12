@@ -14,7 +14,10 @@
 
 /** Creates a map and adds it to the page. */
 function initMap() {
+  // Coordinates of Googleplex
+  const googleplexLat = 37.422;
+  const googleplexLng = -122.084;
   const map = new google.maps.Map(
       document.getElementById('map'),
-      {center: {lat: 37.422, lng: -122.084}, zoom: 16});
+      {center: {lat: googleplexLat, lng: googleplexLng}, zoom: 16});
 }
