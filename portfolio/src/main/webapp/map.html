@@ -12,15 +12,21 @@
     <div class="topnav">
       <a href="index.html">Home</a>
       <a href="interests.html">Interests</a>    
-      <a class="active" href="map.html">Map</a>
+      <a class="active" href="map.html">Map Game</a>
     </div>
     <div id="content">
-      <h1>Eshika's Portfolio</h1>
+      <h1>Map Guessing Game</h1>
+      <p>Guess where the street view is from
+        by dropping a pin on the second map. 
+        Click submit to see how many miles 
+        off you were!</p>
       <div id="streetMap"></div>
+      <br></br>
       <div id="guessMap"></div>
-      <button onclick="submit()">Submit</button>
-      <button onclick="location.reload()">Restart</button>
-      <div id="distance"></div>
+      <div class="button-container">
+        <button id="guessSubmit" onclick="submit()">Submit</button>
+        <button id="restartGame" onclick="location.reload()">Restart</button>
+      </div>
     </div>
   </body>
 

@@ -40,7 +40,7 @@ function initMap() {
   });
   
   const listener = map.addListener('click', function(e) {
-    let pinLoc = e.latLng;
+    const pinLoc = e.latLng;
     guess.setPosition(pinLoc);
     if (guess.getVisible()) {
       map.panTo(guess.getPosition());
@@ -60,9 +60,9 @@ function initMap() {
 function randomPano(callback) {
   const lat = (Math.random()*90)-90;
   const lng = (Math.random()*180)-180;
-  const svs = new google.maps.StreetViewService();
+  const streetViewService = new google.maps.StreetViewService();
   const randomLoc = new google.maps.LatLng(lat, lng);
-  svs.getPanorama({
+  streetViewService.getPanorama({
     location: randomLoc,
     radius: 50,
   }, callback);
@@ -74,7 +74,7 @@ function randomPano(callback) {
 function handleCallback(data, status) {
   if (status == 'OK') {
     answer = data.location.latLng;
-    let panorama = new google.maps.StreetViewPanorama(
+    const panorama = new google.maps.StreetViewPanorama(
         document.getElementById('streetMap'), {
           position: answer,
           addressControl: false,
@@ -91,14 +91,14 @@ function handleCallback(data, status) {
 let finalScore = 0.0;
 
 /**
- * Calculates distance between two coords in miles. 
+ * Calculates distance between two lat lng coordinates in miles. 
  */
 function calcScore(loc1, loc2) {
-  let R = 3958.8; // Radius of the Earth in miles
-  let rlat1 = loc1.lat() * (Math.PI/180); // Convert degrees to radians
-  let rlat2 = loc2.lat() * (Math.PI/180); // Convert degrees to radians
-  let difflat = rlat2-rlat1; // Radian difference (latitudes)
-  let difflon = (loc2.lng()-loc1.lng()) * (Math.PI/180); // Radian difference (longitudes)
+  const R = 3958.8; // Radius of the Earth in miles
+  const rlat1 = loc1.lat() * (Math.PI/180); // Convert degrees to radians
+  const rlat2 = loc2.lat() * (Math.PI/180); // Convert degrees to radians
+  const difflat = rlat2-rlat1; // Radian difference (latitudes)
+  const difflon = (loc2.lng()-loc1.lng()) * (Math.PI/180); // Radian difference (longitudes)
   finalScore = 2 * R * Math.asin(Math.sqrt(Math.sin(difflat/2)*Math.sin(difflat/2)+Math.cos(rlat1)*Math.cos(rlat2)*Math.sin(difflon/2)*Math.sin(difflon/2)));
 }
 
@@ -108,7 +108,7 @@ function calcScore(loc1, loc2) {
  */
 function submit() {
   alert("Distance: " + finalScore.toFixed(2) + " miles");
-  let ansMarker = new google.maps.Marker({
+  const ansMarker = new google.maps.Marker({
     position: answer, 
     map: map,
     icon: {
@@ -116,5 +116,5 @@ function submit() {
     }
   });
   map.panTo(answer);
-  let line = new google.maps.Polyline({path: [ansMarker.getPosition(), guess.getPosition()], map: map});
+  const line = new google.maps.Polyline({path: [ansMarker.getPosition(), guess.getPosition()], map: map});
 }

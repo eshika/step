@@ -170,3 +170,7 @@ input[type=submit] {
   width: 700px;
   margin: auto;
 }
+
+#guessSubmit, #restartGame {
+  display: inline-block;
+}
