@@ -80,8 +80,12 @@ public class DataServlet extends HttpServlet {
       String comment = (String) entity.getProperty(TEXT_PROPERTY_LABEL);
       comments.add(comment);
     }
-
-    String json = convertToJsonUsingGson(comments.subList(0, commentLimit));
+    String json;
+    if (commentLimit > comments.size()) {
+      json = convertToJsonUsingGson(comments);
+    } else {
+      json = convertToJsonUsingGson(comments.subList(0, commentLimit));
+    }
     response.setContentType("application/json;");
     response.getWriter().println(json);
   }
@@ -113,13 +117,11 @@ public class DataServlet extends HttpServlet {
     String userInputString = request.getParameter("max-comments");
 
     // Convert the input to an int.
-    int userInput;
     try {
-      userInput = Integer.parseInt(userInputString);
+      return Integer.parseInt(userInputString);
     } catch (NumberFormatException e) {
       System.err.println("Could not convert to int: " + userInputString);
-      return -1;
+      return 1;
     }
-    return userInput;
   }
 }
