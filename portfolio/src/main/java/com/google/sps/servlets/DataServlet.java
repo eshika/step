@@ -81,7 +81,7 @@ public class DataServlet extends HttpServlet {
       comments.add(comment);
     }
     String json;
-    if (commentLimit > comments.size()) {
+    if (commentLimit > comments.size() || commentLimit < 0) {
       json = convertToJsonUsingGson(comments);
     } else {
       json = convertToJsonUsingGson(comments.subList(0, commentLimit));
