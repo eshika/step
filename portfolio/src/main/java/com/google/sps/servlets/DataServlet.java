@@ -81,7 +81,7 @@ public class DataServlet extends HttpServlet {
       comments.add(comment);
     }
     String json;
-    if (commentLimit > comments.size()) {
+    if (commentLimit > comments.size() || commentLimit < 0) {
       json = convertToJsonUsingGson(comments);
     } else {
       json = convertToJsonUsingGson(comments.subList(0, commentLimit));
@@ -111,7 +111,7 @@ public class DataServlet extends HttpServlet {
     return value;
   }  
 
-  /** Returns the max number of comments to fetch and display, or -1 if the choice was invalid. */
+  /** Returns the max number of comments to fetch and display, or 1 if the choice was invalid. */
   private int getCommentLimit(HttpServletRequest request) {
     // Get the input from the form.
     String userInputString = request.getParameter("max-comments");
