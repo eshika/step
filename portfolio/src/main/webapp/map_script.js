@@ -50,6 +50,8 @@ function initMap() {
     }
     calcScore(pinLoc, answer);
   });
+
+  randomPano(handleCallback);
 }
 
 /**
