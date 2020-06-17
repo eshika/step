@@ -16,19 +16,24 @@ var map;
 var guess;
 var answer;
 
-/** Initializes the regular map for users to guess
+let finalScore = 0.0;
+
+/** 
+  * Initializes the regular map for users to guess
   * and the map marker that represents the user's guess. 
   */
 function initMap() {
+  const originCoords = {lat: 0.0, lng: 0.0};
+
   map = new google.maps.Map(
       document.getElementById('guessMap'),
-      {center: {lat: 0.0, lng: 0.0}, 
+      {center: originCoords, 
       zoom: 1,
       streetViewControl: false,
   });
 
   guess = new google.maps.Marker({
-    position: {lat: 0.0, lng: 0.0}, 
+    position: originCoords, 
     map: map,
     draggable:true
   });
@@ -88,8 +93,6 @@ function handleCallback(data, status) {
     randomPano(handleCallback);
   }
 }
-
-let finalScore = 0.0;
 
 /**
  * Calculates distance between two lat lng coordinates in miles. 
