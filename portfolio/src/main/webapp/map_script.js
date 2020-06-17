@@ -25,6 +25,7 @@ let finalScore = 0.0;
 function initMap() {
   const originCoords = {lat: 0.0, lng: 0.0};
 
+  // Create world map
   map = new google.maps.Map(
       document.getElementById('guessMap'),
       {center: originCoords, 
@@ -32,6 +33,7 @@ function initMap() {
       streetViewControl: false,
   });
 
+  // Create marker that represents guess 
   guess = new google.maps.Marker({
     position: originCoords, 
     map: map,
@@ -40,22 +42,23 @@ function initMap() {
 
   guess.setVisible(false);
 
+  // Allow guess marker to be dragged
   guess.addListener('dragend', function(e) {
     calcScore(e.latLng, answer);
   });
   
+  // Allow guess marker location to change with click  
   const listener = map.addListener('click', function(e) {
     const pinLoc = e.latLng;
     guess.setPosition(pinLoc);
-    if (guess.getVisible()) {
-      map.panTo(guess.getPosition());
-    } else {
+    if (!guess.getVisible()) {
       guess.setVisible(true);
-      map.panTo(guess.getPosition());
-    }
+    } 
+    map.panTo(guess.getPosition());
     calcScore(pinLoc, answer);
   });
 
+  // Create street view map
   randomPano(handleCallback);
 }
 
