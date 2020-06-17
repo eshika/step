@@ -36,6 +36,7 @@ public class DataServlet extends HttpServlet {
   public static final String COMMENT_ENTITY_LABEL = "Comment";
   public static final String TEXT_PROPERTY_LABEL = "comment";
   public static final String TIMESTAMP_PROPERTY_LABEL = "timestamp";
+  public static final int DEFAULT_COMMENT_LIMIT = 1;
 
   private DatastoreService datastore;
   private int commentLimit;
@@ -81,8 +82,11 @@ public class DataServlet extends HttpServlet {
       comments.add(comment);
     }
     String json;
-    if (commentLimit > comments.size() || commentLimit < 0) {
+    if (commentLimit > comments.size()) {
       json = convertToJsonUsingGson(comments);
+    } else if (commentLimit < 0) {
+      commentLimit = DEFAULT_COMMENT_LIMIT;
+      json = convertToJsonUsingGson(comments.subList(0, commentLimit));
     } else {
       json = convertToJsonUsingGson(comments.subList(0, commentLimit));
     }
