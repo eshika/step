@@ -67,7 +67,7 @@ function initMap() {
  * street view map with those coordinates.
  */
 function randomPano(callback) {
-  const lat = (Math.random()*90)-90;
+  const lat = (Math.random()*180)-90;
   const lng = (Math.random()*180)-180;
   const streetViewService = new google.maps.StreetViewService();
   const randomLoc = new google.maps.LatLng(lat, lng);
