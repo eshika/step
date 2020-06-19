@@ -8,15 +8,25 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmQyeeWI_cV0yvh1SuXYGoLej3g_D9NbY"></script>
     <script src="map_script.js"></script>
   </head>
-  <body onload="initMap();">
+  <body onload="initMap()">
     <div class="topnav">
       <a href="index.html">Home</a>
       <a href="interests.html">Interests</a>    
-      <a class="active" href="map.html">Map</a>
+      <a class="active" href="map.html">Map Game</a>
     </div>
     <div id="content">
-      <h1>Eshika's Portfolio</h1>
-      <div id="map"></div>
+      <h1>Map Guessing Game</h1>
+      <p>Guess where the street view is by 
+        dropping a pin on the second map. 
+        Click submit to see how many miles 
+        off you were!</p>
+      <div id="streetMap"></div>
+      <br></br>
+      <div id="guessMap"></div>
+      <div class="button-container">
+        <button id="guessSubmit" onclick="submit()">Submit</button>
+        <button id="restartGame" onclick="location.reload()">Restart</button>
+      </div>
     </div>
   </body>
 
