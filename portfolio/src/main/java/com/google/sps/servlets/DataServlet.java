@@ -36,8 +36,10 @@ public class DataServlet extends HttpServlet {
   public static final String COMMENT_ENTITY_LABEL = "Comment";
   public static final String TEXT_PROPERTY_LABEL = "comment";
   public static final String TIMESTAMP_PROPERTY_LABEL = "timestamp";
+  public static final int DEFAULT_COMMENT_LIMIT = 1;
 
   private DatastoreService datastore;
+  private int commentLimit;
 
   /**
    * Initializes datastore for comments.
@@ -60,7 +62,7 @@ public class DataServlet extends HttpServlet {
     commentEntity.setProperty(TIMESTAMP_PROPERTY_LABEL, timestamp);
     datastore.put(commentEntity);
 
-    response.sendRedirect("/index.html");
+    response.sendRedirect("/");
   }
 
   /**
@@ -73,11 +75,20 @@ public class DataServlet extends HttpServlet {
     PreparedQuery results = datastore.prepare(query);
 
     List<String> comments = new ArrayList<>();
+    commentLimit = getCommentLimit(request);
+
     for (Entity entity : results.asIterable()) {
       String comment = (String) entity.getProperty(TEXT_PROPERTY_LABEL);
       comments.add(comment);
     }
-    String json = convertToJsonUsingGson(comments);
+    String json;
+    if (commentLimit > comments.size()) {
+      json = convertToJsonUsingGson(comments);
+    } else if (commentLimit < 0) {
+      json = convertToJsonUsingGson(comments.subList(0, DEFAULT_COMMENT_LIMIT));
+    } else {
+      json = convertToJsonUsingGson(comments.subList(0, commentLimit));
+    }
     response.setContentType("application/json;");
     response.getWriter().println(json);
   }
@@ -85,7 +96,7 @@ public class DataServlet extends HttpServlet {
   /**
    * Converts a ArrayList<String> of messages into a JSON string using the Gson library.
    */
-  private String convertToJsonUsingGson(List<String> messages) {
+  private String convertToJsonUsingGson(List<String> comments) {
     Gson gson = new Gson();
     String json = gson.toJson(comments);
     return json;
@@ -102,4 +113,18 @@ public class DataServlet extends HttpServlet {
     }
     return value;
   }  
+
+  /** Returns the max number of comments to fetch and display, or -1 if the choice was invalid. */
+  private int getCommentLimit(HttpServletRequest request) {
+    // Get the input from the form.
+    String userInputString = request.getParameter("max-comments");
+
+    // Convert the input to an int.
+    try {
+      return Integer.parseInt(userInputString);
+    } catch (NumberFormatException e) {
+      System.err.println("Could not convert to int: " + userInputString);
+      return -1;
+    }
+  }
 }

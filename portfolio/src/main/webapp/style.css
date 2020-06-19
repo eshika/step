@@ -36,13 +36,13 @@ button:hover {
 }
 
 .topnav {
-    background-color: paleturquoise;
+    background-color: rgb(58, 58, 58);
     overflow: hidden;
 }
 
 .topnav a {
     float: left;
-    color: black;
+    color: white;
     text-align: center;
     padding: 14px 16px;
     font-family: sans-serif;
@@ -81,13 +81,13 @@ footer {
     align-items: center;
     display: flex;
     justify-content: center;
-    background-color: paleturquoise;
+    background-color: rgb(58, 58, 58);
     margin-top: 15px;
 }
 
 footer a {
     display: block;
-    color: black;
+    color: white;
     font-size: 30px;
     padding: 5px 5px;
 }
@@ -127,4 +127,39 @@ footer a {
   text-align: center;
   margin-bottom: 10px;
   margin-top: 10px;
+}
+
+form {
+  text-align: center;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  border: 1px solid #ddd;
+}
+
+ul li {
+  padding: 8px 16px;
+  border-bottom: 1px solid #ddd;
+  font-family: sans-serif;
+  font-size: 14px;
+}
+
+ul li:last-child {
+  border-bottom: none;
+}
+
+input[type=submit] {
+  background-color: lightskyblue;
+  border: 2px solid lightskyblue;
+  font-size: 14px;
+  text-align: center;
+  padding: 7px 15px;
+  border-radius: 8px;
+  color: black;
+  transition-duration: 0.4s;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;  
 }

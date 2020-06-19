@@ -28,10 +28,10 @@ function showFunFact() {
 }
 
 /**
- * Fetches and displays thank you message.
+ * Fetches and displays comments.
  */
-async function fetchMessage() {
-  const response = await fetch('/data');
+async function fetchMessage(commentLimit) {
+  const response = await fetch('/data?max-comments=' + commentLimit);
   const message = await response.json();
   const messageContainer = document.getElementById('message-container')
   messageContainer.innerText = '';
@@ -41,9 +41,56 @@ async function fetchMessage() {
 
 }
 
-/** Creates an <li> element containing text. */
+/**
+ * Creates an <li> element containing text.
+ */
 function createListElement(text) {
   const liElement = document.createElement('li');
   liElement.innerText = text;
   return liElement;
+}
+
+/**
+ * Saves the comment limit as a cookie.
+ */
+function setCookie() {
+  let d = new Date();
+  // Cookie expires after 365 days
+  d.setTime(d.getTime() + (365 * 24 * 60 * 60 * 1000));
+  let expires = 'expires='+d.toUTCString();
+  let cvalue = document.getElementById('limit').value;
+  document.cookie = 'limit=' + cvalue + ';' + expires + ';path=/';
+}
+
+/**
+ * Obtains the cookie value.
+ */
+function getCookie(cookieLabel) {
+  let name = cookieLabel + '=';
+  let cookies = document.cookie.split(';');
+  for (let i = 0; i < cookies.length; i++) {
+    let current = cookies[i];
+    while (current.charAt(0) == ' ') {
+      current = current.substring(1);
+    }
+    if (current.indexOf(name) == 0) {
+      return current.substring(name.length, current.length);
+    }
+  }
+  return '';
+}
+
+/**
+ * Fetches comments based on the value stored in the cookie.
+ */
+function checkCookie() {
+  let commentLimit = getCookie('limit');
+  if (commentLimit != '') {
+    document.getElementById('limit').value = commentLimit;
+    fetchMessage(commentLimit);
+  } else {
+    // Default value for max comments is 1
+    document.getElementById('limit').value = 1;
+    fetchMessage(1);
+  }
 }

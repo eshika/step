@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
   </head>
-  <body onload="fetchMessage()">
+  <body onload="checkCookie()">
     <div class="topnav">
       <a class="active" href="index.html">Home</a>
       <a href="interests.html">Interests</a>      
@@ -26,9 +26,13 @@
         <p>Leave a comment here:</p>
         <textarea name="text-input"></textarea>
         </br><br/>
+
+        <p>Max comments shown:</p>
+        <input type="number" id="limit" name="max-comments" min="1" max="100" onchange="setCookie();checkCookie()">
+        <br/><br/>
         <input type="submit" />
       </form>
-      <div id="message-container"></div>
+      <ul id="message-container"></ul>
     </div>
   </body>
 
