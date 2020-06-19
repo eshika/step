@@ -85,8 +85,7 @@ public class DataServlet extends HttpServlet {
     if (commentLimit > comments.size()) {
       json = convertToJsonUsingGson(comments);
     } else if (commentLimit < 0) {
-      commentLimit = DEFAULT_COMMENT_LIMIT;
-      json = convertToJsonUsingGson(comments.subList(0, commentLimit));
+      json = convertToJsonUsingGson(comments.subList(0, DEFAULT_COMMENT_LIMIT));
     } else {
       json = convertToJsonUsingGson(comments.subList(0, commentLimit));
     }
@@ -115,7 +114,7 @@ public class DataServlet extends HttpServlet {
     return value;
   }  
 
-  /** Returns the max number of comments to fetch and display, or 1 if the choice was invalid. */
+  /** Returns the max number of comments to fetch and display, or -1 if the choice was invalid. */
   private int getCommentLimit(HttpServletRequest request) {
     // Get the input from the form.
     String userInputString = request.getParameter("max-comments");
@@ -125,7 +124,7 @@ public class DataServlet extends HttpServlet {
       return Integer.parseInt(userInputString);
     } catch (NumberFormatException e) {
       System.err.println("Could not convert to int: " + userInputString);
-      return 1;
+      return -1;
     }
   }
 }
