@@ -163,3 +163,10 @@ input[type=submit] {
   margin-left: auto;
   margin-right: auto;  
 }
+
+#map {
+  border: thin solid black;
+  height: 500px;
+  width: 500px;
+  margin: auto;
+}
