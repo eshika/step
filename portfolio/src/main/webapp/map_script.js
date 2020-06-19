@@ -16,40 +16,50 @@ var map;
 var guess;
 var answer;
 
-/** Initializes the regular map for users to guess
+let finalScore = 0.0;
+
+/** 
+  * Initializes the regular map for users to guess
   * and the map marker that represents the user's guess. 
   */
 function initMap() {
+  const originCoords = {lat: 0.0, lng: 0.0};
+
+  // Create world map
   map = new google.maps.Map(
       document.getElementById('guessMap'),
-      {center: {lat: 0.0, lng: 0.0}, 
+      {center: originCoords, 
       zoom: 1,
       streetViewControl: false,
   });
 
+  // Create marker that represents guess 
   guess = new google.maps.Marker({
-    position: {lat: 0.0, lng: 0.0}, 
+    position: originCoords, 
     map: map,
     draggable:true
   });
 
   guess.setVisible(false);
 
+  // Allow guess marker to be dragged
   guess.addListener('dragend', function(e) {
     calcScore(e.latLng, answer);
   });
   
+  // Allow guess marker location to change with click  
   const listener = map.addListener('click', function(e) {
     const pinLoc = e.latLng;
     guess.setPosition(pinLoc);
-    if (guess.getVisible()) {
-      map.panTo(guess.getPosition());
-    } else {
+    if (!guess.getVisible()) {
       guess.setVisible(true);
-      map.panTo(guess.getPosition());
-    }
+    } 
+    map.panTo(guess.getPosition());
     calcScore(pinLoc, answer);
   });
+
+  // Create street view map
+  randomPano(handleCallback);
 }
 
 /**
@@ -57,7 +67,7 @@ function initMap() {
  * street view map with those coordinates.
  */
 function randomPano(callback) {
-  const lat = (Math.random()*90)-90;
+  const lat = (Math.random()*180)-90;
   const lng = (Math.random()*180)-180;
   const streetViewService = new google.maps.StreetViewService();
   const randomLoc = new google.maps.LatLng(lat, lng);
@@ -86,8 +96,6 @@ function handleCallback(data, status) {
     randomPano(handleCallback);
   }
 }
-
-let finalScore = 0.0;
 
 /**
  * Calculates distance between two lat lng coordinates in miles. 
